@@ -12,7 +12,7 @@
 ``` 
 docker compose up -d 
 ```
-6. Levantar ```yarn start:dev```
+6. Levantar ```npm run start:dev```
 
 7. Ejecutar seed para llenar la base de datos
 ``` 
