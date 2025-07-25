@@ -1,4 +1,5 @@
-import { Product } from "src/products/entities";
+import { Product } from "../../products/entities/product.entity";
+import { Sale } from "../../sales/entities/sale.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
@@ -27,15 +28,21 @@ export class User {
 
     @Column('text', {
         array: true,
-        default: ['user']
+        default: ['cajero']
     })
-    roles: string[];
+    roles: string[]; // Roles: 'admin' o 'cajero'
 
     @OneToMany(
         () => Product,
         (product)=> product.user
     )
     product: Product;
+
+    @OneToMany(
+        () => Sale,
+        (sale) => sale.usuario
+    )
+    sales: Sale[];
 
     @BeforeInsert()
     checkFieldsBeforeInsert(){

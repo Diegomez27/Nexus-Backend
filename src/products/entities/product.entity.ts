@@ -1,85 +1,36 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { ProductImage } from './product-images.entity';
-import { User } from 'src/auth/entities/user.entity';
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../../auth/entities/user.entity';
 
 @Entity({ name: 'products'})
 export class Product {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('text', {
-        unique: true,
-    })
-    title: string;
+    @Column('text')
+    nombre: string;
 
     @Column('float', {
         default: 0
     })
-    price: number;
-
-    @Column({
-        type: 'text',
-        nullable: true
-    })
-    description: string;
-
-    @Column('text', {
-        unique: true
-    })
-    slug: string;
+    precio: number;
 
     @Column('int', {
         default: 0
     })
     stock: number;
 
-    @Column('text', {
-        array: true
-    })
-    sizes: string[]
-
     @Column('text')
-    gender: string;
+    categoria: string;
 
-    @Column('text',{
-        array: true,
-        default: []
+    @Column('bool', {
+        default: true
     })
-    tags: string[];
-
-    @OneToMany(
-        () => ProductImage, 
-        (productImage) => productImage.product,
-        { cascade: true, eager: true }
-    )
-    images?: ProductImage[];
+    isActive: boolean;
 
     @ManyToOne(
-        ()=> User,
-        ( user ) => user.product,
-        {eager: true}
+        () => User,
+        (user) => user.product,
+        { eager: true }
     )
-    user: User
-
-    @BeforeInsert()
-    checkSlugInsert() {
-
-        if (!this.slug) {
-            this.slug = this.title
-        }
-
-        this.slug = this.slug
-            .toLowerCase()
-            .replaceAll(' ', '_')
-            .replaceAll("'", '')
-    }
-
-    @BeforeUpdate()
-    checkSlugUpdate() {
-
-        this.slug = this.slug
-            .toLowerCase()
-            .replaceAll(' ', '_')
-            .replaceAll("'", '')
-    }
+    user: User;
 }
