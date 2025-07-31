@@ -33,12 +33,19 @@ export class SalesService {
 
             // Validar stock y calcular total
             for (const item of createSaleDto.items) {
+                // Buscar por nombre de producto
                 const product = await queryRunner.manager.findOne(Product, {
-                    where: { id: item.producto_id }
+                    where: { nombre: item.nombre_producto }
                 });
 
+                // TODO VENTA CON UUID/CODIGO DE BARRAS
+                // const product = await queryRunner.manager.findOne(Product, {
+                //     where: { id: item.producto_id }
+                // });
+
                 if (!product) {
-                    throw new NotFoundException(`Producto con ID ${item.producto_id} no encontrado`);
+                    throw new NotFoundException(`Producto con nombre "${item.nombre_producto}" no encontrado`);
+                    // throw new NotFoundException(`Producto con ID ${item.producto_id} no encontrado`);
                 }
 
                 if (!product.isActive) {

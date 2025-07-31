@@ -1,8 +1,11 @@
-import { IsInt, IsPositive, IsUUID } from 'class-validator';
+import { IsInt, IsPositive, IsString } from 'class-validator';
 
 export class CreateSaleItemDto {
-    @IsUUID()
-    producto_id: string;
+    @IsString()
+    nombre_producto: string;
+    
+    // @IsUUID()
+    // producto_id: string;
 
     @IsInt()
     @IsPositive()
