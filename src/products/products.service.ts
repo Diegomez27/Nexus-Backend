@@ -32,7 +32,13 @@ export class ProductsService {
     }
   }
 
-  async findAll(paginationDto: PaginationDto = {}) {
+  async findAll() {
+    return await this.productRepository.find({
+      where: { isActive: true }
+    });
+  }
+
+  async findAllPaginated(paginationDto: PaginationDto = {}) {
     const { limit = 10, offset = 0 } = paginationDto;
 
     const products = await this.productRepository.find({

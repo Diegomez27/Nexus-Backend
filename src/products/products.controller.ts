@@ -23,8 +23,13 @@ export class ProductsController {
 
 
   @Get()
-  findAll(@Query() paginationdto: PaginationDto) {
-    return this.productsService.findAll(paginationdto);
+  findAllPaginated(@Query() paginationdto: PaginationDto) {
+    return this.productsService. findAllPaginated(paginationdto);
+  }
+
+  @Get('all')
+  findAll() {
+    return this.productsService.findAll();
   }
 
   @Get(':term')
